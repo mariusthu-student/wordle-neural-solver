@@ -65,7 +65,11 @@ class WordleEnv(gym.Env):
         return self._get_obs(), self._get_info()
 
     def render(self):
-        print(self.word_memory, self.reward)
+        mot,colors = self.word_memory
+        colors_map = {0: "⬜", 1: "🟨", 2: "🟩"}
+        colors_str = "".join([colors_map.get(c, "⬜") for c in colors])
+        output = f"Essai {self.iteration}/{self.allowed_attempt} : {mot.upper()} -> {colors_str}"
+        print(output)
       
     def action_masks(self):
         # Interdire les mots déjà essayés   
