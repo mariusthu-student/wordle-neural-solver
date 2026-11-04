@@ -10,7 +10,8 @@ class WordleEnv(gym.Env):
     """
         Envir n°3 :
             observation space is a 6*5*29 tensor
-            reward will be improved
+            reward now take into consideration DB reduction
+            reward now blames words reuse
     """
     def __init__(self, word_list, allowed_attempt=6):
         super().__init__()
@@ -79,7 +80,7 @@ class WordleEnv(gym.Env):
         # Map the discrete action to a word
         mot = self.ListDB[action]
         colors = evalPatterncolor(self.answer_word, mot)
-
+        prev_word,_ = self.word_memory
         self.word_memory = (mot,colors)
         
         
@@ -97,11 +98,15 @@ class WordleEnv(gym.Env):
         # Simple reward structure: +1 for reaching target, 0 otherwise
         reward = 100 if action == self.answer_int else -5
 
+        #reward if word reduces number of answer
         previous_DB_len = len(self.potential_answer)
         self.potential_answer = self.potential_answer & set(matchInList(mot,colors, self.ListDB))
         reduction_reward = previous_DB_len/len(self.potential_answer)*self.reduction_reward_rate
         reward+= reduction_reward
 
+        #reward blame if uses the same word twice
+        repetition_blame = (mot == prev_word)*(-1000)
+        reward+=repetition_blame
 
         observation = self._get_obs()
         info = self._get_info()        
