@@ -1,12 +1,10 @@
 # Wordle Neural Solver  
 
-### Installer un nouveau module
+In order to use this project, you have to :
+ - clone this repo
+ - cd into the repo
+ - run 'python -m venv venv'
+ - run 'venv/Scripts/activate' (on windows at least)
+ - run 'pip install -r requirement.txt'
+ - run 'python3 src/main.py'
 
-
-Exécuter : <span style="color:green"> pip install <nom_du_module> </span>  
-Mettre à jour le fichier : <span style="color:green"> pip freeze > requirements.txt </span>  
-commit et push requirements.txt sur GitHub
-
-### Récupérer les modules à installer
-
-<span style="color:green"> pip install -r requirements.txt </span> 

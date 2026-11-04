@@ -3,7 +3,7 @@ import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 from random import randint
-from Wordle_func import *
+from features import *
 
 class WordleEnv(gym.Env):
 

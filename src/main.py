@@ -1,7 +1,7 @@
 import gymnasium as gym
 from stable_baselines3 import A2C
 
-from env import WordleEnv
+from env2 import WordleEnv
 
 env = WordleEnv()
 env.reset()
