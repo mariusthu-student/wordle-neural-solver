@@ -100,6 +100,15 @@ class WordleEnv(gym.Env):
 
         #action added to ban mask
         self.mask[action] = 0
+
+        #compute words still suceptible to be answer
+        previous_DB_len = len(self.potential_answer)
+        self.potential_answer = self.potential_answer & set(matchInList(action,colors, self.ListDB))
+
+        #bans all non-answer indexes
+        for indx in range(len(self.ListDB)):
+            if indx not in self.potential_answer:
+                self.mask[indx] = 0
         
         self.iteration+=1
         
@@ -112,8 +121,6 @@ class WordleEnv(gym.Env):
         reward = 100 if action == self.answer_int else -5
 
         #reward if word reduces number of answer
-        previous_DB_len = len(self.potential_answer)
-        self.potential_answer = self.potential_answer & set(matchInList(action,colors, self.ListDB))
         reduction_reward = previous_DB_len/len(self.potential_answer)*self.reduction_reward_rate
         reward+= reduction_reward
 
