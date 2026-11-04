@@ -3,13 +3,13 @@ import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 from random import randint
-from features import *
+from features import evalPatterncolor
 
 class WordleEnv(gym.Env):
 
-    def __init__(self):
+    def __init__(self, wordlist):
         super().__init__()
-        
+        self.ListDB = wordlist
         self.iteration = -1
         self.answer_word = 'pizza'
         self.answer_int = -1
@@ -22,7 +22,7 @@ class WordleEnv(gym.Env):
                     dtype=np.int8
                 )
         
-        self.action_space = gym.spaces.Discrete(len(ListDB))
+        self.action_space = gym.spaces.Discrete(len(self.ListDB))
 
     def _get_obs(self):
         return self.observation
@@ -43,8 +43,8 @@ class WordleEnv(gym.Env):
         super().reset(seed=seed)
 
         self.iteration = 0
-        self.answer_int = self.np_random.integers(0, len(ListDB)-1, dtype=int)
-        self.answer_word = ListDB[self.answer_int]
+        self.answer_int = self.np_random.integers(0, len(self.ListDB)-1, dtype=int)
+        self.answer_word = self.ListDB[self.answer_int]
     
         self.observation = np.zeros(
                     (6, 5, 29),
@@ -68,7 +68,7 @@ class WordleEnv(gym.Env):
         
         
         # Map the discrete action to a word
-        mot = ListDB[action]
+        mot = self.ListDB[action]
         colors = evalPatterncolor(self.answer_word, mot)
 
         self.word_memory = (mot,colors)

@@ -1,9 +1,5 @@
 import numpy as np
 
-with open('data/raw/mots.txt','r', encoding="utf8") as DBtxt:
-    ListDB = [e.strip("'") for e in DBtxt.readline().split(sep=', ')]
-
-
 def char_to_index(char: str) -> int:
     """
     Convertit un caractère (A-Z) en son indice (0-25).

@@ -1,9 +1,12 @@
 import gymnasium as gym
 from stable_baselines3 import A2C
 
-from env2 import WordleEnv
+from env import WordleEnv
 
-env = WordleEnv()
+with open('data/raw/mots.txt','r', encoding="utf8") as DBtxt:
+    ListDB = [e.strip("'") for e in DBtxt.readline().split(sep=', ')]
+
+env = WordleEnv(word_list=ListDB)
 env.reset()
 
 model = A2C('MlpPolicy', env, verbose=1)
