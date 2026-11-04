@@ -5,11 +5,13 @@ from gymnasium import spaces
 from random import randint
 from features import evalPatterncolor
 
+
 class WordleEnv(gym.Env):
 
-    def __init__(self, word_list):
+    def __init__(self, word_list, allowed_attempt=6):
         super().__init__()
         self.ListDB = word_list
+        self.allowed_attempt = allowed_attempt
         self.iteration = -1
         self.answer_word = 'pizza'
         self.answer_int = -1
@@ -18,7 +20,7 @@ class WordleEnv(gym.Env):
         self.observation_space = spaces.Box(
                     low=0,
                     high=1,
-                    shape=(6, 5, 29),
+                    shape=(self.allowed_attempt, 5, 29),
                     dtype=np.int8
                 )
         
@@ -47,7 +49,7 @@ class WordleEnv(gym.Env):
         self.answer_word = self.ListDB[self.answer_int]
     
         self.observation = np.zeros(
-                    (6, 5, 29),
+                    (self.allowed_attempt, 5, 29),
                     dtype=np.int8
                 )
                 
@@ -80,7 +82,7 @@ class WordleEnv(gym.Env):
         self.iteration+=1
         
         # Check if agent reached the target
-        terminated = (action == self.answer_int or self.iteration >= 6)
+        terminated = (action == self.answer_int or self.iteration >= self.allowed_attempt)
 
         truncated = False
 
@@ -93,3 +95,7 @@ class WordleEnv(gym.Env):
         
     
         return observation, reward, terminated, truncated, info
+
+if __name__ == "__main__":
+    print("imported env2")
+    
