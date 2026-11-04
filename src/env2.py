@@ -32,7 +32,7 @@ class WordleEnv(gym.Env):
     def _get_info(self):
         return {}
 
-    def reset(self, seed: Optional[int] = None):
+    def reset(self, seed: Optional[int] = None, options = None,):
         """Start a new episode.
 
         Args:
@@ -94,7 +94,7 @@ class WordleEnv(gym.Env):
 
         
     
-        return observation, reward, terminated, truncated, info
+        return observation.copy(), reward, terminated, truncated, info
 
 if __name__ == "__main__":
     print("imported env2")
