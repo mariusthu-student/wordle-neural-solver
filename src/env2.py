@@ -7,7 +7,11 @@ from features import evalPatterncolor
 
 
 class WordleEnv(gym.Env):
-
+    """
+        Envir n°2 :
+            observation space is a 6*5*29 tensor
+            reward func is basic and only gives points for the answer (no intermediate reward)
+    """
     def __init__(self, word_list, allowed_attempt=6):
         super().__init__()
         self.ListDB = word_list
@@ -90,9 +94,7 @@ class WordleEnv(gym.Env):
         reward = 100 if action == self.answer_int else -5
 
         observation = self._get_obs()
-        info = self._get_info()
-
-        
+        info = self._get_info()        
     
         return observation.copy(), reward, terminated, truncated, info
 
