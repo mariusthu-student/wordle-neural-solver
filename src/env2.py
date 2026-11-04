@@ -7,9 +7,9 @@ from features import evalPatterncolor
 
 class WordleEnv(gym.Env):
 
-    def __init__(self, wordlist):
+    def __init__(self, word_list):
         super().__init__()
-        self.ListDB = wordlist
+        self.ListDB = word_list
         self.iteration = -1
         self.answer_word = 'pizza'
         self.answer_int = -1
