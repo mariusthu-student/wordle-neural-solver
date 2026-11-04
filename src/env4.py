@@ -69,7 +69,7 @@ class WordleEnv(gym.Env):
         mot,colors = self.word_memory
         colors_map = {0: "⬜", 1: "🟨", 2: "🟩"}
         colors_str = "".join([colors_map.get(c, "⬜") for c in colors])
-        output = f"Essai {self.iteration}/{self.allowed_attempt} : {mot.upper()} -> {colors_str}    reward : {self.reward}"
+        output = f"Essai {self.iteration}/{self.allowed_attempt} : {mot.upper()} -> {colors_str}    reward : {self.reward}  DBsize : {len(self.potential_answer)}"
         print(output)
       
     def action_masks(self):
@@ -121,7 +121,7 @@ class WordleEnv(gym.Env):
         reward = 100 if action == self.answer_int else -5
 
         #reward if word reduces number of answer
-        reduction_reward = previous_DB_len/len(self.potential_answer)*self.reduction_reward_rate
+        reduction_reward = int(previous_DB_len/len(self.potential_answer))*self.reduction_reward_rate
         reward+= reduction_reward
 
 
