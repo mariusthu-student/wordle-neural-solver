@@ -8,10 +8,10 @@ env = WordleEnv(word_list)
 env.reset(target_word="ROUGE")
 
 # Jouer un premier coup
-feedback, reward, is_over, info = env.step("POMME")
-print("Coup 1 'POMME' -> Feedback:", feedback) # Attendu: [0, 2, 0, 0, 2]
+obs, reward, terminated, truncated, info = env.step("POMME")
+print("Coup 1 'POMME' -> Feedback:", info["feedback"])  # Attendu: [0, 2, 0, 0, 2]
 
 # Jouer le mot gagnant
-feedback, reward, is_over, info = env.step("ROUGE")
-print("Coup 2 'ROUGE' -> Feedback:", feedback) # Attendu: [2, 2, 2, 2, 2]
+obs, reward, terminated, truncated, info = env.step("ROUGE")
+print("Coup 2 'ROUGE' -> Feedback:", info["feedback"])  # Attendu: [2, 2, 2, 2, 2]
 print("Victoire ?", info["won"], "| Récompense :", reward)
