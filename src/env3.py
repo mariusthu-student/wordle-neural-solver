@@ -68,7 +68,7 @@ class WordleEnv(gym.Env):
         mot,colors = self.word_memory
         colors_map = {0: "⬜", 1: "🟨", 2: "🟩"}
         colors_str = "".join([colors_map.get(c, "⬜") for c in colors])
-        output = f"Essai {self.iteration}/{self.allowed_attempt} : {mot.upper()} -> {colors_str}"
+        output = f"Essai {self.iteration}/{self.allowed_attempt} : {mot.upper()} -> {colors_str}    reward : {self.reward}"
         print(output)
       
     def action_masks(self):
