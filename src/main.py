@@ -2,7 +2,7 @@ import gymnasium as gym
 from stable_baselines3 import A2C
 from sb3_contrib import MaskablePPO
 
-from env3 import WordleEnv
+from env4 import WordleEnv
 
 with open('data/raw/mots.txt','r', encoding="utf8") as DBtxt:
     ListDB = [e.strip("'") for e in DBtxt.readline().split(sep=', ')]

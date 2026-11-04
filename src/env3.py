@@ -21,7 +21,7 @@ class WordleEnv(gym.Env):
         self.answer_word = 'pizza'
         self.answer_int = -1
         self.word_memory = ('pizza',[0,0,0,0,0])
-        self.potential_answer = set(self.ListDB)
+        self.potential_answer = set(range(len(self.ListDB)))
         self.reduction_reward_rate = 4
         self.mask =  np.ones(6022, dtype=bool)
         self.observation_space = spaces.Box(
@@ -53,7 +53,7 @@ class WordleEnv(gym.Env):
 
         self.mask =  np.ones(6022, dtype=bool)
         self.iteration = 0
-        self.potential_answer = set(self.ListDB)
+        self.potential_answer = set(range(len(self.ListDB)))
         self.answer_int = self.np_random.integers(0, len(self.ListDB)-1, dtype=int)
         self.answer_word = self.ListDB[self.answer_int]
 
@@ -112,7 +112,7 @@ class WordleEnv(gym.Env):
 
         #reward if word reduces number of answer
         previous_DB_len = len(self.potential_answer)
-        self.potential_answer = self.potential_answer & set(matchInList(mot,colors, self.ListDB))
+        self.potential_answer = self.potential_answer & set(matchInList(action,colors, self.ListDB))
         reduction_reward = previous_DB_len/len(self.potential_answer)*self.reduction_reward_rate
         reward+= reduction_reward
 

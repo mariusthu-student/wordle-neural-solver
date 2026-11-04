@@ -60,7 +60,8 @@ def evalPatterncolor(toGuess, mot):
         letavailable[l] -= 1
     return pattern
 
-def matchInList(patmot, pattern, ListDB):
+def matchInList(patmot_ind, pattern, ListDB):
+    patmot = ListDB[patmot_ind]
     rouge,vert,orange = [],[],[]
     for i in range(len(pattern)):
         sym = pattern[i]
@@ -76,7 +77,8 @@ def matchInList(patmot, pattern, ListDB):
         let_connu[l] = 1 if l not in let_connu else let_connu[l] + 1
 
     DBclean = []
-    for mot in ListDB:
+    for ind_mot in range(len(ListDB)):
+        mot = ListDB[ind_mot]
         let_mot = {}
         for l in mot:
             let_mot[l] = let_mot[l]+1 if l in let_mot else 1
@@ -105,6 +107,6 @@ def matchInList(patmot, pattern, ListDB):
                 toKeep = False                    #print("il manque une orange")
                 break
         if toKeep:
-            DBclean.append(mot)
+            DBclean.append(ind_mot)
     return DBclean
 
