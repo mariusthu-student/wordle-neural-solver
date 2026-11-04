@@ -6,14 +6,14 @@ from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.monitor import Monitor
 
-from env3 import WordleEnv
+from env4 import WordleEnv
 
 #Pour avoir le visuel : "tensorboard --logdir current_models/tensorboard_logs" dans un 2nd terminal
 #
 
 # Configuration
-RESET_PROGRESS = True        # Mettre à True pour réinitialiser complètement l'entraînement et repartir de zéro
-TOTAL_TIMESTEPS = 100_000     # Nombre de pas à ajouter à cet entraînement (modifiable)
+RESET_PROGRESS = False        # Mettre à True pour réinitialiser complètement l'entraînement et repartir de zéro
+TOTAL_TIMESTEPS = 500_000     # Nombre de pas à ajouter à cet entraînement (modifiable)
 EVAL_FREQ_STEPS = 1_000      # Fréquence d'évaluation (en nombre total de pas)
 N_EVAL_EPISODES = 10          # Nombre de parties pour tester le niveau de l'agent
 ALLOWED_ATTEMPTS = 30         # Nombre d'essais autorisés par partie (identique à main)
