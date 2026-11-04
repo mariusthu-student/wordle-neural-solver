@@ -1,7 +1,7 @@
 import gymnasium as gym
 from stable_baselines3 import A2C
 
-from env import WordleEnv
+from env2 import WordleEnv
 
 with open('data/raw/mots.txt','r', encoding="utf8") as DBtxt:
     ListDB = [e.strip("'") for e in DBtxt.readline().split(sep=', ')]
