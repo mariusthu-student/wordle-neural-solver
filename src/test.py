@@ -1,5 +1,5 @@
 from gymnasium.utils.env_checker import check_env
-from env2 import WordleEnv
+from env3 import WordleEnv
 
 # This will catch many common issues
 try:

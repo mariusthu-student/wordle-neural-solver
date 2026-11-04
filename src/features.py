@@ -60,7 +60,7 @@ def evalPatterncolor(toGuess, mot):
         letavailable[l] -= 1
     return pattern
 
-def matchInList(patmot, pattern):
+def matchInList(patmot, pattern, ListDB):
     rouge,vert,orange = [],[],[]
     for i in range(len(pattern)):
         sym = pattern[i]
