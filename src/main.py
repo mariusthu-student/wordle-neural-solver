@@ -1,5 +1,6 @@
 import gymnasium as gym
 from stable_baselines3 import A2C
+from sb3_contrib import MaskablePPO
 
 from env3 import WordleEnv
 
@@ -9,7 +10,14 @@ with open('data/raw/mots.txt','r', encoding="utf8") as DBtxt:
 env = WordleEnv(word_list=ListDB, allowed_attempt=30)
 env.reset()
 
-model = A2C('MlpPolicy', env, verbose=1)
+#model = A2C('MlpPolicy', env, verbose=1)
+model = MaskablePPO(
+    "MlpPolicy",
+    env,
+    verbose=1,
+    learning_rate=0.0003,
+    gamma=0.99
+)
 model.learn(total_timesteps=1000)
 
 
@@ -24,4 +32,3 @@ for ep in range(episodes):
         action, _states = model.predict(obs)
         obs, rewards, done, trunc, info = env.step(action)
         env.render()
-        print(rewards)

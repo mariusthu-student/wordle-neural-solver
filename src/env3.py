@@ -11,7 +11,7 @@ class WordleEnv(gym.Env):
         Envir n°3 :
             observation space is a 6*5*29 tensor
             reward now take into consideration DB reduction
-            reward now blames words reuse
+            action mask put in place to stop word reuse
     """
     def __init__(self, word_list, allowed_attempt=6):
         super().__init__()
@@ -23,7 +23,7 @@ class WordleEnv(gym.Env):
         self.word_memory = ('pizza',[0,0,0,0,0])
         self.potential_answer = set(self.ListDB)
         self.reduction_reward_rate = 4
-
+        self.mask =  np.ones(6022, dtype=bool)
         self.observation_space = spaces.Box(
                     low=0,
                     high=1,
@@ -51,6 +51,7 @@ class WordleEnv(gym.Env):
         # IMPORTANT: Must call this first to seed the random number generator
         super().reset(seed=seed)
 
+        self.mask =  np.ones(6022, dtype=bool)
         self.iteration = 0
         self.potential_answer = set(self.ListDB)
         self.answer_int = self.np_random.integers(0, len(self.ListDB)-1, dtype=int)
@@ -64,8 +65,12 @@ class WordleEnv(gym.Env):
         return self._get_obs(), self._get_info()
 
     def render(self):
-        print(self.word_memory)
-        
+        print(self.word_memory, self.reward)
+      
+    def action_masks(self):
+        # Interdire les mots déjà essayés   
+        return self.mask  
+      
     def step(self, action):
         """Execute one timestep within the environment.
 
@@ -84,10 +89,13 @@ class WordleEnv(gym.Env):
         self.word_memory = (mot,colors)
         
         
-        #ajoute le mot essayé à l'espace d'observation ainsi que sa correction
+        #action encoded to observation space
         for i in range(5):
             self.observation[self.iteration][i] = [int(l == mot[i]) for l in 'abcdefghijklmnopqrstuvwxyz'] + [int(k == colors[i]) for k in range(3)]
 
+        #action added to ban mask
+        self.mask[action] = 0
+        
         self.iteration+=1
         
         # Check if agent reached the target
@@ -104,10 +112,9 @@ class WordleEnv(gym.Env):
         reduction_reward = previous_DB_len/len(self.potential_answer)*self.reduction_reward_rate
         reward+= reduction_reward
 
-        #reward blame if uses the same word twice
-        repetition_blame = (mot == prev_word)*(-1000)
-        reward+=repetition_blame
 
+        self.reward = reward
+        
         observation = self._get_obs()
         info = self._get_info()        
     
