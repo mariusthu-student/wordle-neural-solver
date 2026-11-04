@@ -6,9 +6,9 @@ from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.monitor import Monitor
 
-from env4 import WordleEnv
+from env3 import WordleEnv
 
-#Pour avoir le visuel : "tensorboard --logdir models/tensorboard_logs" dans un 2nd terminal
+#Pour avoir le visuel : "tensorboard --logdir current_models/tensorboard_logs" dans un 2nd terminal
 #
 
 # Configuration
@@ -19,7 +19,7 @@ N_EVAL_EPISODES = 10          # Nombre de parties pour tester le niveau de l'age
 ALLOWED_ATTEMPTS = 30         # Nombre d'essais autorisés par partie (identique à main)
 LEARNING_RATE = 0.0003
 GAMMA = 0.99
-MODELS_DIR = "models"
+MODELS_DIR = "current_models"
 BEST_MODEL_DIR = os.path.join(MODELS_DIR, "best_model")
 BEST_MODEL_PATH = os.path.join(BEST_MODEL_DIR, "best_model.zip")
 LATEST_MODEL_PATH = os.path.join(MODELS_DIR, "ppo_mask_wordle.zip")
